@@ -54,6 +54,17 @@ QUnit.test('toQuery', function() {
 			}]
 		}
 	});
+
+	// Test for $select
+	query = feathersQueryLogic.toQuery({
+		$select: ["mat", "justin"]
+	});
+
+	QUnit.deepEqual(query, {
+		filter: {
+			$select: ["mat", "justin"]
+		}
+	});
 });
 
 QUnit.test('toParams', function() {

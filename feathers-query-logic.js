@@ -1,6 +1,6 @@
 module.exports = {
 	// https://docs.feathersjs.com/api/databases/querying.html
-	// {$sort: {data: 1}, $populate, $limit, $skip}
+	// {$sort: {data: 1}, $limit, $skip, $select, $in, $nin, $lt, $lte, $gt, $gte, $ne, $or}
 	toQuery: function(params) {
 		var special = {},
 			filter = {},
@@ -33,6 +33,10 @@ module.exports = {
 		if (special.$or) {
 			filter.$or = special.$or;
 			delete special.$or;
+		}
+		if (special.$select) {
+			filter.$select = special.$select;
+			delete special.$select;
 		}
 		for (var specialKey in special) {
 			query[specialKey] = special[specialKey];
@@ -67,6 +71,8 @@ module.exports = {
 			delete params.filter;
 			if (filter.$or) {
 				params.$or = filter.$or;
+			} else if (filter.$select) {
+				params.$select = filter.$select;
 			} else {
 				Object.assign(params, filter);
 			}
